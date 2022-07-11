@@ -32,6 +32,12 @@
         top: 50%;
         margin-top: -120px;
         width: 100%;
+
+        & a.active {
+                svg {
+                    color: #ffd700;
+                }
+            }
         
 
         a{
@@ -82,6 +88,8 @@
                         top: 0;
                     }
                 }
+
+                
             }
 
             &::after {
