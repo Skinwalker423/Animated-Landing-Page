@@ -5,6 +5,7 @@ import '../../index.scss';
 import './home-styles.scss';
 import AnimatedLetters from '../../components/AnimatedLetters';
 import { useEffect, useState } from 'react';
+import HomeLogo from '../../components/Logo/HomeLogo';
 
 const Home = () => {
 
@@ -49,6 +50,7 @@ const Home = () => {
                 <h2>Front End / Web Apps / e-commerce</h2>
                 <Link to={'/contact'} className="flat-button">CONTACT ME</Link>
             </div>
+            <HomeLogo />
         </div>
     )
 }
