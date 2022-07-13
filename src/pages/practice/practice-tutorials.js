@@ -1,8 +1,10 @@
 import './practice-styles.scss';
-import React, {useEffect, useRef, useState, useMemo} from 'react';
-
+import React, {useEffect, useRef, useState, useMemo, useContext} from 'react';
+import { ThemeContext } from '../../context/ThemeContex';
 
 const Practice = () => {
+
+    const {setDarkTheme, darkTheme, toggleTheme} = useContext(ThemeContext);
 
     const [resourcetype, setResourceType] = useState('posts');
     const [users, setUsers] = useState([]);
@@ -16,8 +18,8 @@ const Practice = () => {
     }, [number]);
 
     const themeStyles = {
-        backgroundColor: dark ? 'black' : 'white',
-        color: dark ? 'white' : 'black'
+        backgroundColor: darkTheme ? 'black' : 'white',
+        color: darkTheme ? 'white' : 'black'
     }
 
     useEffect(() =>{ 
@@ -42,16 +44,17 @@ const Practice = () => {
     const onClickHandle = (resource) => {
         setResourceType(resource);
     }
+    const onClickThemeHandle = () => {
+        toggleTheme();
+        console.log(darkTheme);
+    }
 
 
     // const focusHandle = () => {
     //     inputRef.current.focus();
     // }
 
-    const changeThemeHandle = () => {
-        setDark((dark) => !dark);
-    }
-
+    
 
     return (
         <div className='practice-container'>
@@ -66,7 +69,7 @@ const Practice = () => {
             <button onClick={
                 () => onClickHandle('comments')
             }>comment</button>
-            <button onClick={changeThemeHandle}>CHANGE THEME</button>
+            <button onClick={onClickThemeHandle}>CHANGE THEME</button>
 
             <h3>Output: {windowWidth}</h3>
             <h3>Count: {renderCount.current}</h3>
