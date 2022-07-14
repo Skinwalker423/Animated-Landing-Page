@@ -4,7 +4,7 @@ import { ThemeContext, ACTION_TYPES } from '../../context/ThemeContex';
 
 const Practice = () => {
 
-    const {setDarkTheme, darkTheme, toggleTheme, dispatch, state} = useContext(ThemeContext);
+    const {setDarkTheme, darkTheme, toggleTheme, dispatch, state, clearInput} = useContext(ThemeContext);
 
     const [resourcetype, setResourceType] = useState('posts');
     const [users, setUsers] = useState([]);
@@ -62,10 +62,29 @@ const Practice = () => {
 
     const formHandle = (e) => {
         e.preventDefault();
-        dispatch({type: ACTION_TYPES.ADD_TODO, payload: state.title})
+        dispatch({type: ACTION_TYPES.ADD_TODO, payload: state.title});
+        dispatch({type: ACTION_TYPES.CLEAR_INPUT});
+        
 
     } 
 
+    const onChangeHandle = (e) => {
+        dispatch({type: ACTION_TYPES.ADD_TITLE, payload: e.target.value})
+    }
+
+    if(!state.todoList){
+        return;
+    }
+
+    const todoList = state.todoList.map((todo, i) => {
+        return (
+            <div key={todo.id}>
+                <h3>{todo.title} #{i + 1}</h3>
+                <div>{todo.id}</div>
+            </div>
+        )
+    })
+    console.log(state.todoList);
     
 
     return (
@@ -94,11 +113,10 @@ const Practice = () => {
                 <button onClick={decrement}>-</button>
             </div>
             <form onSubmit={formHandle}>
-                <input type={'text'} onChange={(e) => dispatch({
-                    type: ACTION_TYPES.ADD_TITLE, payload: e.target.value
-                }) } />
+                <input type={'text'} value={state.title} onChange={onChangeHandle} />
+                <button type='submit'>Submit</button>
             </form>
-            <h1>TODO: {state.title}</h1>
+            <div>{todoList}</div>
 
             
         </div>

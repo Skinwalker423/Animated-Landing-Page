@@ -23,7 +23,8 @@ export const ACTION_TYPES = {
     INCREMENT_SCORE : 'INCREMENT_SCORE',
     DECREMENT_SCORE : 'DECREMENT_SCORE',
     ADD_TODO : 'ADD_TODO',
-    ADD_TITLE : 'ADD_TITLE'
+    ADD_TITLE : 'ADD_TITLE',
+    CLEAR_INPUT: 'CLEAR_INPUT',
 }
 
 const newTodo = (title) => {
@@ -42,8 +43,13 @@ const reducer = (state, action) => {
             return {...state, score: payload}
         
         case ACTION_TYPES.ADD_TODO : 
-            return [...state, newTodo(payload)]
+            return {...state, todoList: [...state.todoList, newTodo(payload)]}
         
+        case ACTION_TYPES.ADD_TITLE :
+            return {...state, title: payload}
+        
+        case ACTION_TYPES.CLEAR_INPUT : 
+            return {...state, title: ""}
         default :
             return state
     }
@@ -67,7 +73,11 @@ export const ThemeProvider = ({children}) => {
         setDarkTheme((previusDarkTheme) => !previusDarkTheme);
     }
 
-    const value = {darkTheme, setDarkTheme, toggleTheme, dispatch, state}
+    const clearInput = () => {
+        dispatch({type: ACTION_TYPES.CLEAR_INPUT});
+    }
+
+    const value = {darkTheme, setDarkTheme, toggleTheme, dispatch, state, clearInput}
 
     return(
         <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
