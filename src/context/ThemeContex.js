@@ -24,7 +24,9 @@ export const ACTION_TYPES = {
     DECREMENT_SCORE : 'DECREMENT_SCORE',
     ADD_TODO : 'ADD_TODO',
     ADD_TITLE : 'ADD_TITLE',
-    CLEAR_INPUT: 'CLEAR_INPUT',
+    CLEAR_INPUT : 'CLEAR_INPUT',
+    TOGGLE_TODO : 'TOGGLE_TODO',
+    DELETE_TODO : 'DELETE_TODO',
 }
 
 const newTodo = (title) => {
@@ -50,6 +52,12 @@ const reducer = (state, action) => {
         
         case ACTION_TYPES.CLEAR_INPUT : 
             return {...state, title: ""}
+
+        case ACTION_TYPES.TOGGLE_TODO:
+            return {...state, todoList: payload}
+
+        case ACTION_TYPES.DELETE_TODO:
+            return {...state, todoList: payload}
         default :
             return state
     }
@@ -68,6 +76,7 @@ export const ThemeProvider = ({children}) => {
     // const decrement = () => {
     //     setScore(previouScore => previouScore - 1);
     // }
+
 
     const toggleTheme = () => {
         setDarkTheme((previusDarkTheme) => !previusDarkTheme);

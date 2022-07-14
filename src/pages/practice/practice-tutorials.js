@@ -72,6 +72,22 @@ const Practice = () => {
         dispatch({type: ACTION_TYPES.ADD_TITLE, payload: e.target.value})
     }
 
+    const deleteTodoHandle = (id) => {
+        const newTodoList = state.todoList.filter((todo) => {
+            return todo.id !== id;
+        })
+        dispatch({type: ACTION_TYPES.DELETE_TODO, payload: newTodoList})
+    }
+
+    const completeTodoHandle = (id) => {
+        const filteredTodoList = state.todoList.map((todo) => {
+            if(todo.id === id){
+                return {...todo, complete: !todo.complete}
+            } else return todo
+        })
+        dispatch({type: ACTION_TYPES.TOGGLE_TODO, payload: filteredTodoList})
+    }
+
     if(!state.todoList){
         return;
     }
@@ -79,11 +95,20 @@ const Practice = () => {
     const todoList = state.todoList.map((todo, i) => {
         return (
             <div key={todo.id}>
-                <h3>{todo.title} #{i + 1}</h3>
+                <h3 style={{color: todo.complete ? '#AAA' : '#000'}}>{todo.title} #{i + 1}</h3>
                 <div>{todo.id}</div>
+                <div>
+                    <button onClick={() => {
+                        completeTodoHandle(todo.id)
+                    }}>completed</button>
+                    <button onClick={() => {
+                        deleteTodoHandle(todo.id)
+                    }}>delete</button>
+                </div>
             </div>
         )
     })
+
     console.log(state.todoList);
     
 
@@ -124,7 +149,6 @@ const Practice = () => {
 }
 
 const doubleNumber = (num) => {
-        for (let index = 0; index < 10; index++) {}
         return num * 2;
     }
 
